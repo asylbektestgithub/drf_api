@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404
 from .models import Product
-from rest_framework import generics
+from rest_framework import generics, viewsets
 from rest_framework.response import Response
 from .serializers import CreateProductSerializer, ProductSerializer
 
@@ -55,32 +55,52 @@ from .serializers import CreateProductSerializer, ProductSerializer
 #         return Response({'text': 'object deleted'})
 
 
-class ProductCreateAPIView(generics.CreateAPIView):
-    """CreateAPIView for creating Product objects """
+# class ProductCreateAPIView(generics.CreateAPIView):
+#     """CreateAPIView for creating Product objects """
+#
+#     def post(self, request):
+#         serializer = CreateProductSerializer(data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#         return Response(serializer.data)
+#
+#
+# class ProductDetailView(generics.RetrieveAPIView):
+#     """ Doc. info"""
+#
+#     def get(self, request, pk):
+#         serializer = ProductSerializer(get_object_or_404(Product, pk=pk))
+#
+#         return Response(serializer.data)
+#
+#
+# class UpdateProductView(generics.UpdateAPIView):
+#     def put(self, request, *args, **kwargs):
+#         product = get_object_or_404(Product, pk=kwargs.get("pk"))
+#         serializer = ProductSerializer(instance=product, data=request.data, partial=True)
+#         if serializer.is_valid():
+#             serializer.save()
+#
+#         return Response(serializer.data)
+#
+# # TODO: UpdateProductView
+#
+#
+# class ProductListAPIView(generics.ListAPIView):
+#     def get(self, request):
+#         products = Product.objects.all()
+#         serializer = ProductSerializer(products, many=True)
+#
+#         return Response(serializer.data)
+#
+#
+#  TODO H/W:  ListCreateAPIView (CreateProductList)
 
-    def post(self, request):
-        serializer = CreateProductSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-        return Response(serializer.data)
+class ProductViewSet(viewsets.ModelViewSet):
+    """
+    Descr.
+    """
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
 
-
-class ProductDetailView(generics.RetrieveAPIView):
-    """ Doc. info"""
-
-    def get(self, request, pk):
-        serializer = ProductSerializer(get_object_or_404(Product, pk=pk))
-
-        return Response(serializer.data)
-
-
-class UpdateProductView(generics.UpdateAPIView):
-    def put(self, request, *args, **kwargs):
-        product = get_object_or_404(Product, pk=kwargs.get("pk"))
-        serializer = ProductSerializer(instance=product, data=request.data, partial=True)
-        if serializer.is_valid():
-            serializer.save()
-
-        return Response(serializer.data)
-
-# TODO: UpdateProductView
+# permission_classes = [IsAccountAdminOrReadOnly]
