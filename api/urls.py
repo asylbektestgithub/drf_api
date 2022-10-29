@@ -1,5 +1,5 @@
 from django.urls import path, include
-from rest_framework.routers import DefaultRouter
+from rest_framework.routers import DefaultRouter, SimpleRouter
 from .views import (
     # ProductCreateAPIView,
     # ProductDetailView,
@@ -10,7 +10,7 @@ from .views import (
 
 router = DefaultRouter()
 router.register('product', ProductViewSet)
-
+print(router.urls)
 
 urlpatterns = [
     path('', include(router.urls))

@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404
 from .models import Product
 from rest_framework import generics, viewsets
 from rest_framework.response import Response
+from rest_framework.decorators import action
 from .serializers import CreateProductSerializer, ProductSerializer
 
 
@@ -102,5 +103,9 @@ class ProductViewSet(viewsets.ModelViewSet):
     """
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+
+    @action(detail=False, methods=['get'])
+    def info(self, request):
+        return Response({'info': 'Hello, World !'})
 
 # permission_classes = [IsAccountAdminOrReadOnly]
