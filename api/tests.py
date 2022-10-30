@@ -29,9 +29,9 @@ class ProductTestCase(TestCase):
 
 
 class APITests(APITestCase):
-    def test_create_account(self):
+    def test_create_product(self):
         """
-        Ensure we can create a new account object.
+        Ensure we can create a new product object.
         """
         url = reverse('product-list')
         data = {
