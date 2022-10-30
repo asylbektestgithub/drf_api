@@ -8,9 +8,10 @@ from .views import (
     ProductViewSet
     )
 
+
 router = DefaultRouter()
 router.register('product', ProductViewSet)
-print(router.urls)
+
 
 urlpatterns = [
     path('', include(router.urls))
