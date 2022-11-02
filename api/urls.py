@@ -11,7 +11,7 @@ from .views import (
 
 router = DefaultRouter()
 router.register('product', ProductViewSet)
-
+print(router.urls)
 
 urlpatterns = [
     path('', include(router.urls))

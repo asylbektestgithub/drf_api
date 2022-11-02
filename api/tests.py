@@ -1,9 +1,11 @@
 from django.test import TestCase
 from .models import Product
-from rest_framework.test import APITestCase
+from rest_framework.test import APITestCase, CoreAPIClient
 from rest_framework import status
 from django.urls import reverse
+from django.contrib.auth.models import User
 from rest_framework.test import APIRequestFactory
+from requests.auth import HTTPBasicAuth
 
 
 class ProductTestCase(TestCase):
@@ -29,15 +31,16 @@ class ProductTestCase(TestCase):
 
 
 class APITests(APITestCase):
+
     def test_create_product(self):
         """
         Ensure we can create a new product object.
         """
         url = reverse('product-list')
         data = {
-                "title": "Orange",
-                "price": "150"
-                }
+            "title": "Orange",
+            "price": "89.00"
+        }
         response = self.client.post(url, data, format='json')
         print(response)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)

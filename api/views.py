@@ -5,7 +5,8 @@ from rest_framework import generics, viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from .serializers import CreateProductSerializer, ProductSerializer
-
+from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser, IsAuthenticatedOrReadOnly
+from .permissions import IsAdminOrReadOnly
 
 # class ProductCreateView(APIView):
 #     """Creating APIView for product"""
@@ -77,6 +78,7 @@ from .serializers import CreateProductSerializer, ProductSerializer
 #
 #
 # class UpdateProductView(generics.UpdateAPIView):
+#     permission_classes = IsAdminUser
 #     def put(self, request, *args, **kwargs):
 #         product = get_object_or_404(Product, pk=kwargs.get("pk"))
 #         serializer = ProductSerializer(instance=product, data=request.data, partial=True)
@@ -84,11 +86,12 @@ from .serializers import CreateProductSerializer, ProductSerializer
 #             serializer.save()
 #
 #         return Response(serializer.data)
-#
-# # TODO: UpdateProductView
-#
-#
+# #
+# # # TODO: UpdateProductView
+# #
+# #
 # class ProductListAPIView(generics.ListAPIView):
+#     permission_classes = AllowAny
 #     def get(self, request):
 #         products = Product.objects.all()
 #         serializer = ProductSerializer(products, many=True)
@@ -96,7 +99,7 @@ from .serializers import CreateProductSerializer, ProductSerializer
 #         return Response(serializer.data)
 #
 #
-#  TODO H/W:  ListCreateAPIView (CreateProductList)
+# #  TODO H/W:  ListCreateAPIView (CreateProductList)
 
 class ProductViewSet(viewsets.ModelViewSet):
     """
@@ -104,6 +107,7 @@ class ProductViewSet(viewsets.ModelViewSet):
     """
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+    # permission_classes = (IsAdminOrReadOnly,)
 
     @action(detail=False, methods=['get'])
     def info(self, request):
